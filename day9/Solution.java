@@ -16,34 +16,16 @@ class Solution {
     }
 
     private static void part1(List<String> lines) {
-        int[] h = {0, 0};
-        int[] t = {0, 0};
-        List<int[]> tPositions = new ArrayList<>();
-
-        for (String line : lines) {
-            String[] parts = line.split(" ");
-
-            for (int i = 0; i < Integer.parseInt(parts[1]); i++) {
-                switch (parts[0].charAt(0)) {
-                    case 'R' -> h[0]++;
-                    case 'L' -> h[0]--;
-                    case 'U' -> h[1]++;
-                    case 'D' -> h[1]--;
-                }
-
-                if (!isTouching(h, t)) {
-                    moveTail(h, t);
-                    tPositions.add(Arrays.copyOf(t, 2));
-                }
-            }
-        }
-
-        System.out.println(distinctCount(tPositions) + 1);
+        System.out.println(tailPlacesCount(lines, 2));
     }
 
     private static void part2(List<String> lines) {
+        System.out.println(tailPlacesCount(lines, 10));
+    }
+
+    private static long tailPlacesCount(List<String> lines, int length) {
         List<int[]> nodes = new ArrayList<>();
-        for (int i = 0; i < 10; i++) nodes.add(new int[]{0, 0});
+        for (int i = 0; i < length; i++) nodes.add(new int[]{0, 0});
 
         List<int[]> tPositions = new ArrayList<>();
         int[] h = nodes.get(0);
@@ -63,13 +45,13 @@ class Solution {
                 for (int j = 0; j < nodes.size() - 1; j++) {
                     if (!isTouching(nodes.get(j), nodes.get(j + 1))) {
                         moveTail(nodes.get(j), nodes.get(j + 1));
-                        tPositions.add(Arrays.copyOf(t, 2));
                     }
                 }
+                tPositions.add(Arrays.copyOf(t, 2));
             }
         }
 
-        System.out.println(distinctCount(tPositions));
+        return distinctCount(tPositions);
     }
 
     private static boolean isTouching(int[] h, int[] t) {
