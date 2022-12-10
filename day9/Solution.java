@@ -55,13 +55,7 @@ class Solution {
     }
 
     private static boolean isTouching(int[] h, int[] t) {
-        for (int i = t[1] - 1; i <= t[1] + 1; i++) {
-            for (int j = t[0] - 1; j <= t[0] + 1; j++) {
-                if (i == h[1] && j == h[0]) return true;
-            }
-        }
-
-        return false;
+        return Math.abs(h[0] - t[0]) <= 1 && Math.abs(h[1] - t[1]) <= 1;
     }
 
     private static void moveTail(int[] h, int[] t) {
